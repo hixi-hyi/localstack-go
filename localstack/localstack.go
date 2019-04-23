@@ -38,7 +38,7 @@ type LocalStack struct {
 
 func NewLocalStack() *LocalStack {
 	cfg := &Config{
-		Domain: "localstack",
+		Domain: "localhost",
 	}
 	return New(cfg)
 }
