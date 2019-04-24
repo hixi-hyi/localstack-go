@@ -47,92 +47,96 @@ func New(cfg *Config) *LocalStack {
 	return &LocalStack{Config: cfg}
 }
 
-func (l *LocalStack) Session(s *session.Session, port int64) client.ConfigProvider {
+func (l *LocalStack) Session(s *session.Session, service *Service) client.ConfigProvider {
 	c := &aws.Config{
-		Endpoint: aws.String(fmt.Sprintf("http://%s:%d", l.Config.Domain, port)),
+		Endpoint: aws.String(l.Endpoint(service)),
 	}
 	return s.Copy(c)
 }
 
+func (l *LocalStack) Endpoint(service *Service) string {
+	return fmt.Sprintf("http://%s:%d", l.Config.Domain, service.Port)
+}
+
 func (l *LocalStack) APIGateway(s *session.Session) *apigateway.APIGateway {
-	return apigateway.New(l.Session(s, 4567))
+	return apigateway.New(l.Session(s, APIGateway))
 }
 
 func (l *LocalStack) Kinesis(s *session.Session) *kinesis.Kinesis {
-	return kinesis.New(l.Session(s, 4568))
+	return kinesis.New(l.Session(s, Kinesis))
 }
 
 func (l *LocalStack) DynamoDB(s *session.Session) *dynamodb.DynamoDB {
-	return dynamodb.New(l.Session(s, 4569))
+	return dynamodb.New(l.Session(s, DynamoDB))
 }
 
 func (l *LocalStack) DynamoDBStreams(s *session.Session) *dynamodbstreams.DynamoDBStreams {
-	return dynamodbstreams.New(l.Session(s, 4570))
+	return dynamodbstreams.New(l.Session(s, DynamoDBStreams))
 }
 
 func (l *LocalStack) S3(s *session.Session) *s3.S3 {
-	return s3.New(l.Session(s, 4572))
+	return s3.New(l.Session(s, S3))
 }
 
 func (l *LocalStack) Firehose(s *session.Session) *firehose.Firehose {
-	return firehose.New(l.Session(s, 4573))
+	return firehose.New(l.Session(s, Firehose))
 }
 
 func (l *LocalStack) Lambda(s *session.Session) *lambda.Lambda {
-	return lambda.New(l.Session(s, 4574))
+	return lambda.New(l.Session(s, Lambda))
 }
 
 func (l *LocalStack) SNS(s *session.Session) *sns.SNS {
-	return sns.New(l.Session(s, 4575))
+	return sns.New(l.Session(s, SNS))
 }
 
 func (l *LocalStack) SQS(s *session.Session) *sqs.SQS {
-	return sqs.New(l.Session(s, 4576))
+	return sqs.New(l.Session(s, SQS))
 }
 
 func (l *LocalStack) Redshift(s *session.Session) *redshift.Redshift {
-	return redshift.New(l.Session(s, 4577))
+	return redshift.New(l.Session(s, Redshift))
 }
 
 func (l *LocalStack) ElasticsearchService(s *session.Session) *elasticsearchservice.ElasticsearchService {
-	return elasticsearchservice.New(l.Session(s, 4578))
+	return elasticsearchservice.New(l.Session(s, ElasticsearchService))
 }
 func (l *LocalStack) SES(s *session.Session) *ses.SES {
-	return ses.New(l.Session(s, 4579))
+	return ses.New(l.Session(s, SES))
 }
 
 func (l *LocalStack) Route53(s *session.Session) *route53.Route53 {
-	return route53.New(l.Session(s, 4580))
+	return route53.New(l.Session(s, Route53))
 }
 
 func (l *LocalStack) CloudFormation(s *session.Session) *cloudformation.CloudFormation {
-	return cloudformation.New(l.Session(s, 4581))
+	return cloudformation.New(l.Session(s, CloudFormation))
 }
 
 func (l *LocalStack) CloudWatch(s *session.Session) *cloudwatch.CloudWatch {
-	return cloudwatch.New(l.Session(s, 4582))
+	return cloudwatch.New(l.Session(s, CloudWatch))
 }
 
 func (l *LocalStack) SMS(s *session.Session) *sms.SMS {
-	return sms.New(l.Session(s, 4583))
+	return sms.New(l.Session(s, SMS))
 }
 
 func (l *LocalStack) SecretsManager(s *session.Session) *secretsmanager.SecretsManager {
-	return secretsmanager.New(l.Session(s, 4584))
+	return secretsmanager.New(l.Session(s, SecretsManager))
 }
 
 func (l *LocalStack) SFN(s *session.Session) *sfn.SFN {
-	return sfn.New(l.Session(s, 4585))
+	return sfn.New(l.Session(s, SFN))
 }
 
 func (l *LocalStack) CloudWatchLogs(s *session.Session) *cloudwatchlogs.CloudWatchLogs {
-	return cloudwatchlogs.New(l.Session(s, 4586))
+	return cloudwatchlogs.New(l.Session(s, CloudWatchLogs))
 }
 
 func (l *LocalStack) STS(s *session.Session) *sts.STS {
-	return sts.New(l.Session(s, 4592))
+	return sts.New(l.Session(s, STS))
 }
 
 func (l *LocalStack) IAM(s *session.Session) *iam.IAM {
-	return iam.New(l.Session(s, 4593))
+	return iam.New(l.Session(s, IAM))
 }
