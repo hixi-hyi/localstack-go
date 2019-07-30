@@ -75,7 +75,9 @@ func (l *LocalStack) DynamoDBStreams(s *session.Session) *dynamodbstreams.Dynamo
 }
 
 func (l *LocalStack) S3(s *session.Session) *s3.S3 {
-	return s3.New(l.Session(s, S3))
+	svc := s3.New(l.Session(s, S3))
+	svc.Config.WithS3ForcePathStyle(true)
+	return svc
 }
 
 func (l *LocalStack) Firehose(s *session.Session) *firehose.Firehose {
